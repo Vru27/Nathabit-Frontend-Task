@@ -8,6 +8,8 @@ export interface Product {
   stock: number;
   thumbnail: string;
   images: string[];
+
+  brand?: string;
 }
 
 export interface ProductsResponse {

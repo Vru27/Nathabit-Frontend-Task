@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/services/products";
+import ProductCard from "@/components/product/ProductCard";
 
 export default function HomePage() {
   const { data, isLoading, error } = useQuery({
@@ -18,12 +19,13 @@ export default function HomePage() {
   }
 
   return (
-    <main className="p-10">
-      <h1 className="text-3xl font-bold mb-8">Products</h1>
-
-      {data?.products.map((product) => (
-        <div key={product.id}>{product.title}</div>
-      ))}
-    </main>
-  );
+  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {data?.products.map((product) => (
+    <ProductCard
+      key={product.id}
+      product={product}
+    />
+  ))}
+</div>
+);
 }
