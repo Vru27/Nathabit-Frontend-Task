@@ -7,7 +7,7 @@ import ProductSkeleton from "@/components/product/ProductSkeleton";
 import Pagination from "@/components/product/pagination";
 import Container from "@/components/layout/Container";
 import { getProducts } from "@/services/products";
-import { SearchX, AlertTriangle, Sparkles  } from "lucide-react";
+import { SearchX, AlertTriangle, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -26,6 +26,22 @@ export default function HomePage() {
     queryFn: () => getProducts(skip, LIMIT, search),
   });
 
+  const featuredProducts =
+    page === 1 ? data?.products.slice(0, 4) ?? [] : [];
+
+  const remainingProducts =
+    page === 1 ? data?.products.slice(4) ?? [] : data?.products ?? [];
+
+  const categories = [
+    "Beauty",
+    "Fragrances",
+    "Furniture",
+    "Groceries",
+    "Smartphones",
+    "Laptops",
+    "Home Decoration",
+    "Skincare",
+  ];
   return (
     <main className="min-h-screen bg-slate-50">
       <Container>
@@ -80,6 +96,40 @@ export default function HomePage() {
               </Card>
             </div>
           )}
+          {!isLoading && !error && page === 1 && featuredProducts.length > 0 && (
+            <section className="mb-12">
+              <h2 className="mb-6 text-2xl font-bold text-slate-900">
+                Featured Products
+              </h2>
+
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {featuredProducts.map((product) => (
+                  <ProductCard
+                    key={`featured-${product.id}`}
+                    product={product}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+          {!isLoading && !error && (
+          <section className="mb-12">
+            <h2 className="mb-6 text-2xl font-bold text-slate-900">
+              Shop by Category
+            </h2>
+
+            <div className="flex flex-wrap gap-3">
+              {categories.map((category) => (
+                <div
+                  key={category}
+                  className="rounded-full border bg-white px-5 py-2 text-sm font-medium shadow-sm transition hover:bg-green-50 hover:border-green-400 hover:text-green-700 cursor-pointer"
+                >
+                  {category}
+                </div>
+              ))}
+            </div>
+          </section>
+          )}
           {!isLoading && !error && data?.products.length === 0 && (
             <div className="flex min-h-[60vh] items-center justify-center">
               <Card className="w-full max-w-md border-dashed shadow-sm">
@@ -102,7 +152,7 @@ export default function HomePage() {
           {!isLoading && !error && data && data.products.length > 0 && (
             <>
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {data.products.map((product) => (
+                {remainingProducts.map((product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
