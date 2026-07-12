@@ -1,15 +1,21 @@
 import { api } from "./api";
 import { ProductsResponse, Product } from "@/types/product";
 
-export const getProducts = async () => {
-  const { data } = await api.get<ProductsResponse>(
-    "/products?limit=12&skip=0"
-  );
+export async function getProducts(
+  skip: number = 0,
+  limit: number = 20,
+  search?: string
+): Promise<ProductsResponse> {
+  const endpoint = search?.trim()
+    ? `/products/search?q=${search}&limit=${limit}&skip=${skip}`
+    : `/products?limit=${limit}&skip=${skip}`;
+
+  const { data } = await api.get<ProductsResponse>(endpoint);
 
   return data;
-};
+}
 
-export const getProductById = async (id: number) => {
+export const getProductById = async (id: number): Promise<Product> => {
   const { data } = await api.get<Product>(`/products/${id}`);
   return data;
 };

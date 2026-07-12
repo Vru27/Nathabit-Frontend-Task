@@ -9,6 +9,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import ProductDetailsSkeleton from "@/components/product/productDetailsSkeleton";
 
 export default function ProductPage() {
     const params = useParams();
@@ -22,7 +23,7 @@ export default function ProductPage() {
     } = useProduct(id);
 
     if (isLoading) {
-        return <h1 className="p-10">Loading...</h1>;
+        return <ProductDetailsSkeleton />;
     }
 
     if (error || !product) {
