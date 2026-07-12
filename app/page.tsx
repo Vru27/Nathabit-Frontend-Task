@@ -6,7 +6,7 @@ import { getProducts } from "@/services/products";
 export default function HomePage() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
-    queryFn: getProducts,
+    queryFn: () => getProducts(),
   });
 
   if (isLoading) {

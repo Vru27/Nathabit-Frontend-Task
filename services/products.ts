@@ -2,7 +2,9 @@ import { api } from "./api";
 import { ProductsResponse, Product } from "@/types/product";
 
 export const getProducts = async () => {
-  const { data } = await api.get<ProductsResponse>("/products");
+  const { data } = await api.get<ProductsResponse>(
+    "/products?limit=12&skip=0"
+  );
 
   return data;
 };
