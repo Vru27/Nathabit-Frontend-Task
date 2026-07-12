@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Leaf } from "lucide-react";
 import SearchBar from "../search/SearchBar";
+import { Suspense } from "react";
 
 export default function Navbar() {
   return (
@@ -27,7 +28,9 @@ export default function Navbar() {
         </Link>
 
         <div className="w-full max-w-md">
-          <SearchBar />
+          <Suspense fallback={<div className="w-full max-w-md h-11" />}>
+            <SearchBar />
+          </Suspense>
         </div>
 
       </div>
