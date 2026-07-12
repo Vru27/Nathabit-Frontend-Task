@@ -8,8 +8,10 @@ export interface Product {
   stock: number;
   thumbnail: string;
   images: string[];
-
   brand?: string;
+  sku?: string;
+  availabilityStatus?: string;
+  discountPercentage?: number;
 }
 
 export interface ProductsResponse {
