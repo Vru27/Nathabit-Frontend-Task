@@ -10,10 +10,11 @@ import { getProducts } from "@/services/products";
 import { SearchX, AlertTriangle, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
 
 const LIMIT = 20;
 
-export default function HomePage() {
+function HomePageContent() {
   const searchParams = useSearchParams();
 
   const search = searchParams.get("q") || "";
@@ -174,5 +175,26 @@ export default function HomePage() {
         </div>
       </Container>
     </main>
+  );
+}
+export default function HomePage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-slate-50">
+          <Container>
+            <div className="py-10">
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <ProductSkeleton key={index} />
+                ))}
+              </div>
+            </div>
+          </Container>
+        </main>
+      }
+    >
+      <HomePageContent />
+    </Suspense>
   );
 }
