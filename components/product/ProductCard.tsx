@@ -5,6 +5,7 @@ import { Product } from "@/types/product";
 import { formatPrice } from "@/utils/formatPrice";
 import { Button } from "../ui/button";
 import { Star, Package } from "lucide-react";
+import Link from "next/link";
 
 interface ProductCardProps {
     product: Product;
@@ -49,12 +50,14 @@ export default function ProductCard({
                     {formatPrice(product.price)}
                 </p>
 
-                <Button
-                    variant="outline"
-                    className="w-full"
-                >
-                    View Details
-                </Button>
+                <Link href={`/products/${product.id}`}>
+                    <Button
+                        variant="outline"
+                        className="w-full"
+                    >
+                        View Details
+                    </Button>
+                </Link>
             </CardContent>
         </Card>
     );

@@ -9,8 +9,17 @@ export const getProducts = async () => {
   return data;
 };
 
-export const getProduct = async (id: number) => {
+export const getProductById = async (id: number) => {
   const { data } = await api.get<Product>(`/products/${id}`);
-
   return data;
 };
+
+export async function getProductServer(id: number): Promise<Product> {
+  const response = await fetch(`https://dummyjson.com/products/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch product");
+  }
+
+  return response.json();
+}
